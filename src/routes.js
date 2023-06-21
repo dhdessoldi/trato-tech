@@ -1,9 +1,9 @@
+import Anuncie from "Pages/Anuncie";
 import Carrinho from "Pages/Carrinho";
 import Categoria from "Pages/Categoria";
 import Home from "Pages/Home";
 import PaginaPadrao from "components/PaginaPadrao";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-
 
 export default function Router() {
   return (
@@ -12,7 +12,9 @@ export default function Router() {
         <Route path="/" element={<PaginaPadrao/>}>
           <Route index element={<Home/>}/>
           <Route path='/categoria/:nomeCategoria' element={<Categoria/>}/>
-          <Route path= '/carrinho' element={<Carrinho />} />
+          <Route path= 'carrinho' element={<Carrinho />} />
+          <Route path= 'anuncie/:nomeCategoria' element={<Anuncie />} />
+          <Route path= 'anuncie' element={<Anuncie />} />
         </Route>
       </Routes>
     </BrowserRouter>
