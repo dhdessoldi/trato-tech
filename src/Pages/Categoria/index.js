@@ -5,8 +5,7 @@ import styles from './Categoria.module.scss'
 import Item from "components/Item";
 import Button from "components/Button";
 import { useEffect } from "react";
-import { buscarItens } from "store/reducers/itens";
-import { buscarCategorias } from "store/reducers/categorias";
+import { carregarUmaCategoria } from "store/reducers/categorias";
 
 export default function Categoria() {
 
@@ -14,21 +13,18 @@ export default function Categoria() {
   const { nomeCategoria } = useParams();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    dispatch(carregarUmaCategoria(nomeCategoria))
+  }, [dispatch, nomeCategoria])
+
+
   const { categoria, itens } = useSelector(state => {
     const regexp = new RegExp(state.busca, 'i')
     return {
-      categoria: state.categorias.find(categoria => categoria.id === nomeCategoria),
+      categoria: state.categorias.find(categoria => categoria.id === nomeCategoria) || {},
       itens: state.itens.filter(item => item.categoria === nomeCategoria && item.titulo.match(regexp))
-
     }
   })
-
-  useEffect(() => {
-    dispatch(buscarCategorias())
-    dispatch(buscarItens())
-  }, [dispatch])
-
-
   return (
     <div>
       <Header
