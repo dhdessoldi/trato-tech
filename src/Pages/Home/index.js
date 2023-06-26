@@ -23,15 +23,15 @@ export default function Home() {
         imagem={relogio}
         className={styles.header}
       >
-        <Button onClick={() => navigate('/anuncie')}>Quero anunciar!</Button>
+        <Button data-testid='home-botao-anunciar' onClick={() => navigate('/anuncie')}>Quero anunciar!</Button>
       </Header>
       <div className={styles.categorias}>
         <div className={styles['categorias-title']}>
-          <h1>Categorias</h1>
+          <h1 data-testid='categorias-titulo'>Categorias</h1>
         </div>
         <div className={styles['categorias-container']}>
           {categorias.map((categoria, index) => (
-            <div key={index} onClick={() => navigate(`/categoria/${categoria.id}`)}>
+            <div data-testid="home-categorias" key={index} onClick={() => navigate(`/categoria/${categoria.id}`)}>
               <img src={categoria.thumbnail} alt={categoria.nome} />
               <h1>{categoria.nome}</h1>
             </div>
