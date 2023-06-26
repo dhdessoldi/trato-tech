@@ -1,44 +1,43 @@
 import Header from 'components/Header';
 import styles from './Carrinho.module.scss';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Item from 'components/Item';
-import { resetarCarrinho } from 'store/reducers/carrinho';
 import Button from 'components/Button';
+import { useNavigate } from 'react-router-dom';
 
 export default function Carrinho() {
-  const dispatch = useDispatch();
-  const {carrinho, total} = useSelector(state => {
-    let total = 0;
+  const navigate = useNavigate();
+
+  const { carrinho, total } = useSelector(state => {
     const regexp = new RegExp(state.busca, 'i')
-    const carrinhoReduce = state.carrinho.reduce((itens,itemNoCarrinho)=>{
+    const carrinhoReduce = state.carrinho.data.reduce((itens, itemNoCarrinho) => {
       const item = state.itens.find(item => item.id === itemNoCarrinho.id);
-      total += (item.preco * itemNoCarrinho.quantidade)
-      if(item.titulo.match(regexp)) {
+      if (item.titulo.match(regexp)) {
         itens.push({
           ...item,
           quantidade: itemNoCarrinho.quantidade,
         });
       }
       return itens
-    },[]);
+    }, []);
     return {
-    carrinho: carrinhoReduce, 
-    total
-  };
+      carrinho: carrinhoReduce,
+      total: state.carrinho.total,
+    };
   })
   return (
     <div>
-      <Header 
+      <Header
         titulo='Carrinho de compras'
         descricao='Confira os produros que você adicionou ao carrinho'
       />
       <div className={styles.carrinho}>
-        {carrinho.map(item => <Item carrinho key={item.id} {...item}/>)}
+        {carrinho.map(item => <Item carrinho key={item.id} {...item} />)}
         <div className={styles.total}>
           <strong>Resumo da compra</strong>
-          <span>Subtotal: <strong>R$ {total.toFixed(2).replace('.',',')}</strong></span>
+          <span>Subtotal: <strong>R$ {total.toFixed(2).replace('.', ',')}</strong></span>
         </div>
-        <Button type='button' onClick={()=> dispatch(resetarCarrinho())}>
+        <Button type='button' onClick={() => navigate('/pagamento')}>
           Finalizar Compra
         </Button>
       </div>
