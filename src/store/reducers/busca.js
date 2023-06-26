@@ -1,16 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = [];
+const initialState = '';
 
- const buscaSlice = createSlice({
+const buscaSlice = createSlice({
   name: 'busca',
   initialState,
   reducers: {
-    mudarBusca: (state, {payload}) => payload,
+    mudarBusca: (state, { payload }) => payload,
     resetarBusca: () => initialState,
   }
 });
 
-export const {mudarBusca, resetarBusca} = buscaSlice.actions;
+export const { mudarBusca, resetarBusca } = buscaSlice.actions;
 
 export default buscaSlice.reducer;
